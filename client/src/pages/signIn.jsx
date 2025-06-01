@@ -1,13 +1,18 @@
 import { useEffect, useRef } from 'react';
 import { Formik } from 'formik';
 import { Form, Button, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import { signInSchema } from '../utils/validationSchemas';
 import FormField from '../components/FormField';
 import { showInfo } from '../utils/toast';
+import { handleLogin } from '../utils/handleLogin';
 
 function SignIn() {
- const toastShown = useRef(false);
+  const toastShown = useRef(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!toastShown.current) {
@@ -22,11 +27,13 @@ function SignIn() {
         <h4 className="text-center mb-4">Sign In</h4>
         <Formik
           validationSchema={signInSchema}
-          onSubmit={(values) => console.log(values)}
           initialValues={{
             email: '',
             password: '',
           }}
+          onSubmit={(values, { setSubmitting }) =>
+            handleLogin(values, setSubmitting, navigate, dispatch)
+          }
         >
           {({ handleSubmit, handleChange, values, touched, errors }) => (
             <>

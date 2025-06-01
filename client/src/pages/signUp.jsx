@@ -1,17 +1,24 @@
 import { Formik } from 'formik';
 import { Form, Button, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { signUpSchema } from '../utils/validationSchemas';
 import FormField from '../components/FormField';
+import { useDispatch } from 'react-redux';
+import { handleRegister } from '../utils/handleRegister';
 
 function SignUp() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   return (
     <Container className="d-flex justify-content-center align-items-center mt-5">
       <div className="p-4 border rounded shadow-sm" style={{ width: '100%', maxWidth: '400px' }}>
         <h4 className="text-center mb-4">Sign Up</h4>
         <Formik
           validationSchema={signUpSchema}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values, { setSubmitting }) =>
+            handleRegister(values, setSubmitting, navigate, dispatch)
+          }
           initialValues={{
             fullName: '',
             email: '',
