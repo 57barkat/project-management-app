@@ -4,7 +4,14 @@ const User = require('../models/userModel');
 const asyncHandler = require('express-async-handler');
 
 exports.registerUser = asyncHandler(async (req, res) => {
-  const { fullName, email, password } = req.body;
+  const { fullName, email, password, role } = req.body;
+
+  const allowedRoles = ['tester', 'developer']; // only these allowed during signup
+
+  if (!allowedRoles.includes(role)) {
+    res.status(400);
+    throw new Error('Invalid role. Only tester and developer can sign up.');
+  }
 
   const userExists = await User.findOne({ email });
   if (userExists) {
@@ -18,11 +25,19 @@ exports.registerUser = asyncHandler(async (req, res) => {
     fullName,
     email,
     password: hashedPassword,
+    role,
   });
 
-
-  res.status(201).json({  user: { id: user._id, fullName, email } });
+  res.status(201).json({
+    user: {
+      id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      role: user.role,
+    },
+  });
 });
+
 
 exports.loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;

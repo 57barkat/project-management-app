@@ -1,5 +1,6 @@
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { FaSun, FaMoon, FaGem } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 function Header({ theme, setTheme }) {
   const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
@@ -15,19 +16,19 @@ function Header({ theme, setTheme }) {
       className="shadow-sm"
     >
       <Container>
-        <Navbar.Brand href="/" className="d-flex align-items-center gap-2">
+        <Navbar.Brand as={Link} to="/" className="d-flex align-items-center gap-2">
           <FaGem className="text-primary" />
-          <span className="fw-bold">NextGen App</span>
+          <span className="fw-bold">PM App</span>
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
         <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-between">
           <Nav className="me-auto">
-            <Nav.Link href="/home">Home</Nav.Link>
-            <Nav.Link href="/features">Features</Nav.Link>
-            <Nav.Link href="/pricing">Pricing</Nav.Link>
-            <Nav.Link href="/contact">Contact</Nav.Link>
+            <Nav.Link as={Link} to="/home">Home</Nav.Link>
+            <Nav.Link as={Link} to="/features">Features</Nav.Link>
+            <Nav.Link as={Link} to="/pricing">Pricing</Nav.Link>
+            <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
           </Nav>
 
           <Button 

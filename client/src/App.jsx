@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { BrowserRouter } from 'react-router-dom';
 function App() {
   const [theme, setTheme] = useState('light');
 
@@ -15,11 +15,13 @@ function App() {
 
   return (
     <>
+    <BrowserRouter>
       <Header theme={theme} setTheme={setTheme} />
       <div className="px-3">
         <AppRoutes />
       </div>
        <ToastContainer position="top-center" autoClose={3000} />
+       </BrowserRouter>
     </>
   );
 }

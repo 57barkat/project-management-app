@@ -1,10 +1,10 @@
-import { Formik } from 'formik';
-import { Form, Button, Container } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
-import { signUpSchema } from '../utils/validationSchemas';
-import FormField from '../components/FormField';
-import { useDispatch } from 'react-redux';
-import { handleRegister } from '../utils/handleRegister';
+import { Formik } from "formik";
+import { Form, Button, Container } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { signUpSchema } from "../utils/validationSchemas";
+import FormField from "../components/FormField";
+import { useDispatch } from "react-redux";
+import { handleRegister } from "../utils/handleRegister";
 
 function SignUp() {
   const dispatch = useDispatch();
@@ -12,7 +12,10 @@ function SignUp() {
 
   return (
     <Container className="d-flex justify-content-center align-items-center mt-5">
-      <div className="p-4 border rounded shadow-sm" style={{ width: '100%', maxWidth: '400px' }}>
+      <div
+        className="p-4 border rounded shadow-sm"
+        style={{ width: "100%", maxWidth: "400px" }}
+      >
         <h4 className="text-center mb-4">Sign Up</h4>
         <Formik
           validationSchema={signUpSchema}
@@ -20,9 +23,10 @@ function SignUp() {
             handleRegister(values, setSubmitting, navigate, dispatch)
           }
           initialValues={{
-            fullName: '',
-            email: '',
-            password: '',
+            fullName: "",
+            email: "",
+            password: "",
+            role: "",
           }}
         >
           {({ handleSubmit, handleChange, values, touched, errors }) => (
@@ -54,6 +58,25 @@ function SignUp() {
                   touched={touched.password}
                   error={errors.password}
                 />
+
+                {/* Role Dropdown */}
+                <Form.Group controlId="role" className="mb-3">
+                  <Form.Label>Role</Form.Label>
+                  <Form.Select
+                    name="role"
+                    value={values.role}
+                    onChange={handleChange}
+                    isInvalid={!!errors.role && touched.role}
+                  >
+                    <option value="">Select Role</option>
+                    <option value="tester">Tester</option>
+                    <option value="developer">Developer</option>
+                  </Form.Select>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.role}
+                  </Form.Control.Feedback>
+                </Form.Group>
+
                 <Button variant="primary" type="submit" className="w-100">
                   Create Account
                 </Button>
